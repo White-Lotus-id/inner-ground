@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="description" content="A personal growth companion for building self-awareness and emotional clarity">
+    <title>Inner Ground</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Inner Ground">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Inner Ground">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #252525;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a8a8a8;
+            --accent: #c8855c;
+            --accent-hover: #d49570;
+            --border: #3a3a3a;
+            --success: #7c9c7d;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 80px;
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        /* Header */
+        .app-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            padding-top: var(--spacing-md);
+        }
+
+        .app-header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .app-header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: var(--spacing-xs) 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 11px;
+            padding: var(--spacing-xs);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            min-height: 56px;
+        }
+
+        .nav-btn.active {
+            color: var(--accent);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 2px;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xs);
+            font-weight: 400;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            padding: var(--spacing-sm);
+            font-size: 15px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: var(--radius);
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            min-height: 48px;
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+        }
+
+        .card-header {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .card-content {
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .card-footer {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: var(--spacing-sm);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: var(--spacing-md);
+            opacity: 0.3;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .progress-fill {
+            background: var(--accent);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        /* Success Message */
+        .success-msg {
+            background: var(--success);
+            color: var(--bg-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Relationship List */
+        .relationship-list {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .relationship-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .relationship-name {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .relationship-score {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .delete-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: var(--spacing-xs);
+            width: auto;
+            min-height: auto;
+            font-size: 12px;
+            margin-left: var(--spacing-sm);
+        }
+
+        .delete-btn:hover {
+            color: var(--accent);
+            background: transparent;
+        }
+
+        /* Reframe Log */
+        .reframe-item {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .reframe-old {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-sm);
+            border-left: 3px solid var(--text-secondary);
+        }
+
+        .reframe-new {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--accent);
+        }
+
+        .reframe-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        /* Goal Display */
+        .goal-display {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .goal-text {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .goal-action {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: var(--spacing-sm);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .streak-display {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .streak-number {
+            font-size: 48px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .streak-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Button Groups */
+        .button-group {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            body {
+                padding-bottom: 0;
+            }
+
+            .nav-container {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: auto;
+                width: 200px;
+                border-top: none;
+                border-right: 1px solid var(--border);
+                padding: var(--spacing-lg) 0;
+            }
+
+            .nav {
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: var(--spacing-xs);
+                height: 100%;
+            }
+
+            .nav-btn {
+                flex-direction: row;
+                justify-content: flex-start;
+                padding: var(--spacing-md);
+                min-height: auto;
+                font-size: 14px;
+                width: 100%;
+                gap: var(--spacing-sm);
+            }
+
+            .nav-icon {
+                width: 20px;
+                height: 20px;
+            }
+
+            .container {
+                margin-left: 220px;
+                padding: var(--spacing-xl);
+            }
+
+            .app-header h1 {
+                font-size: 36px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .nav-container {
+                width: 240px;
+            }
+
+            .container {
+                margin-left: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav">
+            <button class="nav-btn active" data-section="journal">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                <span>Dump</span>
+            </button>
+            <button class="nav-btn" data-section="no-tracker">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <span>No</span>
+            </button>
+            <button class="nav-btn" data-section="relationships">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+                <span>People</span>
+            </button>
+            <button class="nav-btn" data-section="reframe">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span>Reframe</span>
+            </button>
+            <button class="nav-btn" data-section="goal">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <span>Anchor</span>
+            </button>
+            <button class="nav-btn" data-section="dashboard">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                </svg>
+                <span>Pattern</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <header class="app-header">
+            <h1>Inner Ground</h1>
+            <p>You're capable. You're allowed to take up space.</p>
+        </header>
+
+        <!-- Section 1: Emotional Dump Journal -->
+        <section id="journal" class="section active">
+            <div class="section-header">
+                <h2 class="section-title">What's happening right now?</h2>
+                <p class="section-subtitle">Capture it as it is. No need to make it sound better.</p>
+            </div>
+
+            <div id="journal-success" class="success-msg"></div>
+
+            <form id="journal-form">
+                <div class="form-group">
+                    <label for="trigger">What triggered this feeling?</label>
+                    <textarea id="trigger" required placeholder="Something someone said, a situation, a thought..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="body">What do you feel in your body right now?</label>
+                    <textarea id="body" required placeholder="Tight chest, heavy stomach, numb, restless..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="wish">What do you wish someone would do for you right now?</label>
+                    <textarea id="wish" required placeholder="Listen, validate, give space, check in..."></textarea>
+                </div>
+
+                <button type="submit">Save this moment</button>
+            </form>
+
+            <div style="margin-top: 32px;">
+                <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--text-secondary);">Past entries</h3>
+                <div id="journal-entries"></div>
+            </div>
+        </section>
+
+        <!-- Section 2: No Tracker -->
+        <section id="no-tracker" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Times you said no</h2>
+                <p class="section-subtitle">Every boundary you set is a win. Log it here.</p>
+            </div>
+
+            <div id="no-success" class="success-msg"></div>
+
+            <div class="stat-card" style="margin-bottom: 24px;">
+                <div class="stat-value" id="no-count">0</div>
+                <div class="stat-label">times this week</div>
+            </div>
+
+            <form id="no-form">
+                <div class="form-group">
+                    <label for="no-situation">What was the situation?</label>
+                    <textarea id="no-situation" required placeholder="Someone asked me to..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="no-feeling">How did it feel after?</label>
+                    <textarea id="no-feeling" required placeholder="Relief, guilt, nervous, proud..."></textarea>
+                </div>
+
+                <button type="submit">Log this no</button>
+            </form>
+
+            <div style="margin-top: 32px;">
+                <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--text-secondary);">Your no's</h3>
+                <div id="no-entries"></div>
+            </div>
+        </section>
+
+        <!-- Section 3: Relationship Audit -->
+        <section id="relationships" class="section">
+            <div class="section-header">
+                <h2 class="section-title">People in your life</h2>
+                <p class="section-subtitle">Track patterns, not drama. See who gives energy and who takes it.</p>
+            </div>
+
+            <div id="relationship-success" class="success-msg"></div>
+
+            <form id="add-person-form" style="margin-bottom: 32px;">
+                <div class="form-group">
+                    <label for="person-name">Add someone</label>
+                    <input type="text" id="person-name" required placeholder="First name">
+                </div>
+                <button type="submit">Add person</button>
+            </form>
+
+            <div class="relationship-list" id="people-list"></div>
+
+            <div id="monthly-checkin" style="display: none;">
+                <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--accent);">Monthly check-in</h3>
+                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">Answer for each person you added:</p>
+                <div id="checkin-forms"></div>
+            </div>
+        </section>
+
+        <!-- Section 4: Belief Reframe -->
+        <section id="reframe" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Catching thoughts</h2>
+                <p class="section-subtitle">The stories you tell yourself can change. Here's proof.</p>
+            </div>
+
+            <div id="reframe-success" class="success-msg"></div>
+
+            <form id="reframe-form">
+                <div class="form-group">
+                    <label for="old-thought">What thought did you catch?</label>
+                    <textarea id="old-thought" required placeholder="I always mess things up, I'm too much, Nobody cares..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-thought">What's a more honest version?</label>
+                    <textarea id="new-thought" required placeholder="Not a perfect version. Just more truthful."></textarea>
+                </div>
+
+                <button type="submit">Save reframe</button>
+            </form>
+
+            <div style="margin-top: 32px;">
+                <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--text-secondary);">Evidence you're shifting</h3>
+                <div id="reframe-entries"></div>
+            </div>
+        </section>
+
+        <!-- Section 5: Weekly Goal Anchor -->
+        <section id="goal" class="section">
+            <div class="section-header">
+                <h2 class="section-title">One thing at a time</h2>
+                <p class="section-subtitle">One goal. One weekly action. 30 minutes or less.</p>
+            </div>
+
+            <div id="goal-success" class="success-msg"></div>
+
+            <div id="goal-display-container" style="display: none;">
+                <div class="goal-display">
+                    <div class="goal-text" id="goal-text"></div>
+                    <div class="goal-action" id="goal-action-text"></div>
+                </div>
+
+                <div class="streak-display">
+                    <div class="streak-number" id="streak-number">0</div>
+                    <div class="streak-label">week streak</div>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: 16px; margin-bottom: 12px;">Did you do your 30-minute action this week?</h3>
+                    <div class="button-group">
+                        <button id="goal-yes-btn">Yes</button>
+                        <button id="goal-no-btn" class="btn-secondary">Not yet</button>
+                    </div>
+                </div>
+
+                <button id="goal-change-btn" class="btn-secondary">Change goal</button>
+            </div>
+
+            <form id="goal-form">
+                <div class="form-group">
+                    <label for="goal-text-input">What's your goal?</label>
+                    <input type="text" id="goal-text-input" required placeholder="Be specific. What does done look like?">
+                </div>
+
+                <div class="form-group">
+                    <label for="goal-action-input">What's one weekly action (30 min or less)?</label>
+                    <input type="text" id="goal-action-input" required placeholder="Something concrete you can do this week.">
+                </div>
+
+                <button type="submit">Set goal</button>
+            </form>
+        </section>
+
+        <!-- Section 6: Dashboard -->
+        <section id="dashboard" class="section">
+            <div class="section-header">
+                <h2 class="section-title">You are moving</h2>
+                <p class="section-subtitle">Even when it doesn't feel like it, here's the evidence.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="dash-journal-count">0</div>
+                    <div class="stat-label">dumps this week</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value" id="dash-no-count">0</div>
+                    <div class="stat-label">no's this week</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value" id="dash-reframe-count">0</div>
+                    <div class="stat-label">thoughts reframed</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value" id="dash-streak">0</div>
+                    <div class="stat-label">goal streak</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Engagement pattern (last 30 days)</div>
+                <div id="engagement-chart"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Weekly activity</div>
+                <div id="weekly-bars"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js', { scope: './' })
+                    .then(() => console.log('SW registered'))
+                    .catch(err => console.log('SW error:', err));
+            });
+        }
+
+        // Data Management
+        const DB = {
+            get(key) {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            },
+            set(key, value) {
+                localStorage.setItem(key, JSON.stringify(value));
+            },
+            push(key, item) {
+                const arr = this.get(key) || [];
+                arr.unshift(item);
+                this.set(key, arr);
+            }
+        };
+
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.dataset.section;
+
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+
+                if (section === 'dashboard') {
+                    updateDashboard();
+                }
+            });
+        });
+
+        // Utility: Show success message
+        function showSuccess(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
+        }
+
+        // Utility: Get week start
+        function getWeekStart(date = new Date()) {
+            const d = new Date(date);
+            const day = d.getDay();
+            const diff = d.getDate() - day;
+            return new Date(d.setDate(diff));
+        }
+
+        // Utility: Format date
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Feature 1: Emotional Dump Journal
+        document.getElementById('journal-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const entry = {
+                trigger: document.getElementById('trigger').value,
+                body: document.getElementById('body').value,
+                wish: document.getElementById('wish').value,
+                timestamp: Date.now()
+            };
+
+            DB.push('journal_entries', entry);
+            showSuccess('journal-success', 'Moment saved. You showed up for yourself.');
+            e.target.reset();
+            renderJournalEntries();
+        });
+
+        function renderJournalEntries() {
+            const entries = DB.get('journal_entries') || [];
+            const container = document.getElementById('journal-entries');
+
+            if (entries.length === 0) {
+                container.innerHTML = '<div class="empty-state">No entries yet. The first one is always the hardest.</div>';
+                return;
+            }
+
+            container.innerHTML = entries.slice(0, 20).map(entry => `
+                <div class="card">
+                    <div class="card-header">${formatDate(entry.timestamp)}</div>
+                    <div class="card-content"><strong>Trigger:</strong> ${entry.trigger}</div>
+                    <div class="card-content"><strong>Body:</strong> ${entry.body}</div>
+                    <div class="card-content"><strong>Wish:</strong> ${entry.wish}</div>
+                </div>
+            `).join('');
+        }
+
+        // Feature 2: No Tracker
+        function updateNoCount() {
+            const entries = DB.get('no_entries') || [];
+            const weekStart = getWeekStart().getTime();
+            const thisWeek = entries.filter(e => e.timestamp >= weekStart);
+            document.getElementById('no-count').textContent = thisWeek.length;
+            return thisWeek.length;
+        }
+
+        document.getElementById('no-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const entry = {
+                situation: document.getElementById('no-situation').value,
+                feeling: document.getElementById('no-feeling').value,
+                timestamp: Date.now()
+            };
+
+            DB.push('no_entries', entry);
+
+            const affirmations = [
+                'That took courage. You honored yourself.',
+                'Your no is valid. Always.',
+                'You chose yourself. That matters.',
+                'Every no is practice. You\'re learning.',
+                'Saying no means saying yes to yourself.'
+            ];
+
+            showSuccess('no-success', affirmations[Math.floor(Math.random() * affirmations.length)]);
+            e.target.reset();
+            updateNoCount();
+            renderNoEntries();
+        });
+
+        function renderNoEntries() {
+            const entries = DB.get('no_entries') || [];
+            const container = document.getElementById('no-entries');
+
+            if (entries.length === 0) {
+                container.innerHTML = '<div class="empty-state">No entries yet. Your first no is waiting.</div>';
+                return;
+            }
+
+            container.innerHTML = entries.slice(0, 20).map(entry => `
+                <div class="card">
+                    <div class="card-header">${formatDate(entry.timestamp)}</div>
+                    <div class="card-content"><strong>Situation:</strong> ${entry.situation}</div>
+                    <div class="card-content"><strong>After:</strong> ${entry.feeling}</div>
+                </div>
+            `).join('');
+        }
+
+        // Feature 3: Relationship Audit
+        document.getElementById('add-person-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('person-name').value;
+            const people = DB.get('people') || [];
+
+            if (people.find(p => p.name.toLowerCase() === name.toLowerCase())) {
+                showSuccess('relationship-success', 'That person is already in your list.');
+                return;
+            }
+
+            people.push({ name, checkins: [], addedAt: Date.now() });
+            DB.set('people', people);
+            showSuccess('relationship-success', `${name} added. You'll check in on them monthly.`);
+            e.target.reset();
+            renderPeople();
+        });
+
+        function renderPeople() {
+            const people = DB.get('people') || [];
+            const container = document.getElementById('people-list');
+
+            if (people.length === 0) {
+                container.innerHTML = '<div class="empty-state">Add the people who matter most.</div>';
+                return;
+            }
+
+            container.innerHTML = people.map((person, idx) => {
+                const avgScore = person.checkins.length > 0
+                    ? (person.checkins.reduce((sum, c) => sum + c.energy + c.seen, 0) / (person.checkins.length * 2)).toFixed(1)
+                    : 'No data';
+
+                return `
+                    <div class="relationship-item">
+                        <div>
+                            <div class="relationship-name">${person.name}</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">${person.checkins.length} check-ins</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span class="relationship-score">${avgScore}</span>
+                            <button class="delete-btn" onclick="deletePerson(${idx})">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.deletePerson = function(idx) {
+            const people = DB.get('people') || [];
+            people.splice(idx, 1);
+            DB.set('people', people);
+            renderPeople();
+        };
+
+        // Feature 4: Belief Reframe
+        document.getElementById('reframe-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const entry = {
+                oldThought: document.getElementById('old-thought').value,
+                newThought: document.getElementById('new-thought').value,
+                timestamp: Date.now()
+            };
+
+            DB.push('reframe_entries', entry);
+            showSuccess('reframe-success', 'Caught and reframed. This is how change happens.');
+            e.target.reset();
+            renderReframes();
+        });
+
+        function renderReframes() {
+            const entries = DB.get('reframe_entries') || [];
+            const container = document.getElementById('reframe-entries');
+
+            if (entries.length === 0) {
+                container.innerHTML = '<div class="empty-state">Start catching those thoughts.</div>';
+                return;
+            }
+
+            container.innerHTML = entries.map(entry => `
+                <div class="reframe-item">
+                    <div class="card-footer">${formatDate(entry.timestamp)}</div>
+                    <div class="reframe-old">
+                        <div class="reframe-label">Caught thought</div>
+                        ${entry.oldThought}
+                    </div>
+                    <div class="reframe-new">
+                        <div class="reframe-label">Reframed</div>
+                        ${entry.newThought}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Feature 5: Weekly Goal Anchor
+        function loadGoal() {
+            const goal = DB.get('current_goal');
+            const goalForm = document.getElementById('goal-form');
+            const goalDisplay = document.getElementById('goal-display-container');
+
+            if (goal) {
+                goalForm.style.display = 'none';
+                goalDisplay.style.display = 'block';
+                document.getElementById('goal-text').textContent = goal.goalText;
+                document.getElementById('goal-action-text').textContent = '-> ' + goal.action;
+                document.getElementById('streak-number').textContent = goal.streak || 0;
+            } else {
+                goalForm.style.display = 'block';
+                goalDisplay.style.display = 'none';
+            }
+        }
+
+        document.getElementById('goal-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const goal = {
+                goalText: document.getElementById('goal-text-input').value,
+                action: document.getElementById('goal-action-input').value,
+                streak: 0,
+                lastCheckin: null,
+                createdAt: Date.now()
+            };
+
+            DB.set('current_goal', goal);
+            showSuccess('goal-success', 'Goal set. One week at a time.');
+            e.target.reset();
+            loadGoal();
+        });
+
+        document.getElementById('goal-yes-btn').addEventListener('click', () => {
+            const goal = DB.get('current_goal');
+            const now = Date.now();
+            const weekStart = getWeekStart().getTime();
+
+            if (goal.lastCheckin && goal.lastCheckin >= weekStart) {
+                showSuccess('goal-success', 'Already logged for this week. See you next week.');
+                return;
+            }
+
+            goal.streak = (goal.streak || 0) + 1;
+            goal.lastCheckin = now;
+            DB.set('current_goal', goal);
+
+            const messages = [
+                'Week complete. You\'re becoming who you already believe you are.',
+                'Consistent action builds trust with yourself. Keep going.',
+                'Another week, another step closer. This is how it happens.',
+                'You showed up. That\'s what matters.',
+                'Slow and steady. You\'re doing the work.'
+            ];
+
+            showSuccess('goal-success', messages[Math.floor(Math.random() * messages.length)]);
+            loadGoal();
+        });
+
+        document.getElementById('goal-no-btn').addEventListener('click', () => {
+            showSuccess('goal-success', 'No judgment. Try again this week.');
+        });
+
+        document.getElementById('goal-change-btn').addEventListener('click', () => {
+            if (confirm('Change your goal? Your current streak will reset.')) {
+                DB.set('current_goal', null);
+                loadGoal();
+            }
+        });
+
+        // Feature 6: Dashboard
+        function updateDashboard() {
+            const journalEntries = DB.get('journal_entries') || [];
+            const weekStart = getWeekStart().getTime();
+            const journalThisWeek = journalEntries.filter(e => e.timestamp >= weekStart).length;
+            document.getElementById('dash-journal-count').textContent = journalThisWeek;
+
+            const noCount = updateNoCount();
+            document.getElementById('dash-no-count').textContent = noCount;
+
+            const reframes = DB.get('reframe_entries') || [];
+            document.getElementById('dash-reframe-count').textContent = reframes.length;
+
+            const goal = DB.get('current_goal');
+            document.getElementById('dash-streak').textContent = goal ? (goal.streak || 0) : 0;
+
+            renderEngagementChart();
+            renderWeeklyBars();
+        }
+
+        function renderEngagementChart() {
+            const container = document.getElementById('engagement-chart');
+            const allData = [
+                ...(DB.get('journal_entries') || []),
+                ...(DB.get('no_entries') || []),
+                ...(DB.get('reframe_entries') || [])
+            ];
+
+            const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+            const recent = allData.filter(item => item.timestamp >= thirtyDaysAgo);
+
+            const dayBuckets = {};
+            recent.forEach(item => {
+                const day = new Date(item.timestamp).toLocaleDateString();
+                dayBuckets[day] = (dayBuckets[day] || 0) + 1;
+            });
+
+            const days = Object.keys(dayBuckets).length;
+
+            container.innerHTML = `
+                <div style="padding: 16px; text-align: center;">
+                    <div style="font-size: 32px; color: var(--accent); margin-bottom: 8px;">${days}</div>
+                    <div style="font-size: 14px; color: var(--text-secondary);">active days in last 30</div>
+                </div>
+            `;
+        }
+
+        function renderWeeklyBars() {
+            const container = document.getElementById('weekly-bars');
+            const weekStart = getWeekStart().getTime();
+
+            const allData = [
+                ...(DB.get('journal_entries') || []),
+                ...(DB.get('no_entries') || []),
+                ...(DB.get('reframe_entries') || [])
+            ];
+
+            const thisWeekCount = allData.filter(item => item.timestamp >= weekStart).length;
+            const maxCount = Math.max(thisWeekCount, 10);
+            const percentage = (thisWeekCount / maxCount) * 100;
+
+            container.innerHTML = `
+                <div style="margin-top: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+                        <span style="color: var(--text-secondary);">This week</span>
+                        <span style="color: var(--accent);">${thisWeekCount} entries</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize on load
+        renderJournalEntries();
+        updateNoCount();
+        renderNoEntries();
+        renderPeople();
+        renderReframes();
+        loadGoal();
+    </script>
+</body>
+</html>
